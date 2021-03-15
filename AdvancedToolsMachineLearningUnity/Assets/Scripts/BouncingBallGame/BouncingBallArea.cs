@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using Unity.MLAgents;
 public class BouncingBallArea : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public BouncingBallAgent currentAgent;
+    public Text TimeText;
+    public BallSpawner ballSpawner;
+    private float _timer;
 
-    // Update is called once per frame
-    void Update()
+    public void Reset()
     {
-        
+
     }
 }
