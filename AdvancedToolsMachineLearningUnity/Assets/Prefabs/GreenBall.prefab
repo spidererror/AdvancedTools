@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5470619894037792576}
   - component: {fileID: 5470619894037792579}
   - component: {fileID: 5470619894037792591}
-  m_Layer: 0
+  - component: {fileID: -7624324307397189121}
+  m_Layer: 6
   m_Name: GreenBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,3 +113,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-7624324307397189121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5470619894037792578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f4884f06890b9543bb1888988d7f747, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentReward: 1
+  agent: {fileID: 0}
