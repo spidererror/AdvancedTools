@@ -19,7 +19,7 @@ public class BallSpawner : MonoBehaviour
 
 
 
-    private void RandomSpawnLocation()
+    public void RandomSpawnLocation()
     {
         while (_currentActiveBalls.Count < _maxAmountOfBalls)
         {
@@ -30,5 +30,10 @@ public class BallSpawner : MonoBehaviour
             Vector3 randomPosition = transform.position + new Vector3(Random.Range(-_radius,_radius),0,Random.Range(-_radius,_radius));
             balls.transform.position = randomPosition;
         }
+    }
+
+    public void RemoveBalls()
+    {
+        _currentActiveBalls.Clear();
     }
 }
