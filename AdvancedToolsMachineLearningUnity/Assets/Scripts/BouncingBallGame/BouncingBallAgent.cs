@@ -46,11 +46,12 @@ public class BouncingBallAgent : Agent
         }
 
         // Apply movement
-        _rb.MovePosition(transform.position + transform.forward * forwardAmount * _moveSpeed * Time.fixedDeltaTime);
-        transform.Rotate(transform.up * turnAmount * _turnSpeed * Time.fixedDeltaTime);
+        _rb.MovePosition(transform.position + transform.forward * forwardAmount * _moveSpeed);
+        transform.Rotate(transform.up * turnAmount * _turnSpeed);
 
         // Apply a tiny negative reward every step to encourage action
         if (MaxStep > 0) AddReward(-1f / MaxStep);
+        //if (_rb.velocity.magnitude <= 0) AddReward(-10);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -61,16 +62,20 @@ public class BouncingBallAgent : Agent
         {
             // move forward
             forwardAction = 1;
+            Debug.Log("MOVEFORWARD");
         }
         if (Input.GetKey(KeyCode.A))
         {
             // turn left
             turnAction = 1;
+            Debug.Log("LEFT");
+
         }
         else if (Input.GetKey(KeyCode.D))
         {
             // turn right
             turnAction = 2;
+            Debug.Log("RIGHT");
         }
 
         // Put the actions into the array
@@ -90,10 +95,10 @@ public class BouncingBallAgent : Agent
         sensor.AddObservation(transform.forward);
 
         //Store the distance to each active ball
-        foreach (GameObject ball in _BouncingBallArea.ballSpawner.currentActiveBalls)
+       /* foreach (GameObject ball in _BouncingBallArea.ballSpawner.currentActiveBalls)
         {
             sensor.AddObservation(Vector3.Distance(ball.transform.position,transform.position));
-        }
+        }*/
 
         //check how many balls we have collected inorder to see that more balls equals more rewards.
         sensor.AddObservation(_ballAddReward.GetAmountOfBalls());
