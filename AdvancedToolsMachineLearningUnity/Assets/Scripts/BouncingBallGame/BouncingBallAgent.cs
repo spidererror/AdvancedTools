@@ -46,8 +46,8 @@ public class BouncingBallAgent : Agent
         }
 
         // Apply movement
-        _rb.MovePosition(transform.position + transform.forward * forwardAmount * _moveSpeed);
-        transform.Rotate(transform.up * turnAmount * _turnSpeed);
+        _rb.AddForce(transform.position + transform.forward * forwardAmount * _moveSpeed,ForceMode.Force);
+        _rb.AddTorque(transform.up * turnAmount * _turnSpeed);//transform.Rotate(transform.up * turnAmount * _turnSpeed);
 
         // Apply a tiny negative reward every step to encourage action
         if (MaxStep > 0) AddReward(-1f / MaxStep);
