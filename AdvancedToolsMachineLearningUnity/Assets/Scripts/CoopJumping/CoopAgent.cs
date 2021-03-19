@@ -24,6 +24,12 @@ public class CoopAgent : Agent
         _rb = GetComponent<Rigidbody>();
     }
 
+    private void Update()
+    {
+        resetJump();
+        resetOutOfBounds();
+       // detectJump();
+    }
 
     public override void OnEpisodeBegin()
     {
@@ -53,26 +59,22 @@ public class CoopAgent : Agent
         if (Input.GetKey(KeyCode.W))
         {
             forward = 1;
-            AddReward(4);
+            AddReward(20);
         }
         if (Input.GetKey(KeyCode.A))
         {
             turnSpeed = -1;
-            AddReward(3);
+            AddReward(-10);
         }
         if (Input.GetKey(KeyCode.D))
         {
             turnSpeed = 1;
-            AddReward(3);
+            AddReward(-10);
         }
-        if (!Physics.Raycast(transform.position, transform.up * -.51f))
-        {
-            jump = 0;
-        }
-        else if (Input.GetKey(KeyCode.Space) && (transform.position.y <= _jumpHeight||_canJump))
+        else if (Input.GetKey(KeyCode.Space) && _canJump)
         {
             jump = 1;
-            AddReward(2);
+            AddReward(1+(-1/MaxStep));
         }
         
         actionsOut.DiscreteActions.Array[0] = forward;
@@ -89,7 +91,8 @@ public class CoopAgent : Agent
         //move agent forward when W is pressed
         _rb.AddForce(transform.forward*moveForward*_moveSpeed,ForceMode.Force);
         //Rotate agent;
-        _rb.AddTorque(new Vector3(0,turnSpeed*_turnSpeed,0),ForceMode.Force);
+        transform.Rotate(new Vector3(0,turnSpeed*_turnSpeed*Time.deltaTime,0));
+        //_rb.AddTorque(new Vector3(0,turnSpeed*_turnSpeed,0),ForceMode.Force);
         //Make agent jump when space is pressed
         _rb.AddForce(Vector3.up*jump*_jumpHeight, ForceMode.Impulse);
         //make sure the agent gets punished for inactivity in order to move more
@@ -101,14 +104,35 @@ public class CoopAgent : Agent
         {
             AddReward(-1 / MaxStep);
         }
-        if (transform.position.y > 7)
+        
+        
+    }
+
+   /* private void detectJump()
+    {
+        if (!Physics.Raycast(transform.position, transform.up * -.51f))
         {
-            AddReward(-20000);
-            EndEpisode();
+            jump = 0;
         }
-        if (transform.position.y < 7)
+    }*/
+
+    private void resetJump()
+    {
+        if (transform.position.y > area.agentOneStartPosition.position.y + 5)
         {
-            AddReward(-20000);
+            _canJump = false;
+            AddReward(-1000);
+        }
+    }
+
+    private void resetOutOfBounds()
+    {
+        //fail safe for out of bounds agents.
+        float maxHeight = 5;
+        float minHeight = -12;
+        if (transform.position.y > maxHeight || transform.position.y < minHeight)
+        {
+            AddReward(-1000);
             EndEpisode();
         }
     }
@@ -117,12 +141,12 @@ public class CoopAgent : Agent
     {
         if (other.gameObject.tag == "wall")
         {
-            AddReward(-20);
+            AddReward(-2);
             EndEpisode();
         }
         if (other.gameObject.tag == "goal")
         {
-            AddReward(200);
+            AddReward(2000);
             EndEpisode();
         }
     }
@@ -132,12 +156,16 @@ public class CoopAgent : Agent
         if (collision.gameObject.tag == "walkableSurface")
         {
             _canJump = true;
-            AddReward(1);
+            AddReward(10);
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
+        if (collision.gameObject.tag == "walkableSurface")
+        {
+            _canJump = false;
+        }
         if (collision.gameObject.tag == "agent")
         {
             _canJump = false;
