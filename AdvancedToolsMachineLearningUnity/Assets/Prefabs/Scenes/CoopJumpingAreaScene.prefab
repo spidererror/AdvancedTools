@@ -1142,7 +1142,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 10000
   area: {fileID: 5872828363838666903}
   _moveSpeed: 20
   _turnSpeed: 3600
@@ -1191,7 +1191,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 10000
   area: {fileID: 5872828363838666903}
   _moveSpeed: 20
   _turnSpeed: 3600

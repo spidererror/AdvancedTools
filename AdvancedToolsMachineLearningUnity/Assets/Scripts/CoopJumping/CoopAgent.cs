@@ -61,6 +61,11 @@ public class CoopAgent : Agent
             forward = 1;
             AddReward(20);
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            forward = -1;
+            AddReward(10);
+        }
         if (Input.GetKey(KeyCode.A))
         {
             turnSpeed = -1;
@@ -90,9 +95,15 @@ public class CoopAgent : Agent
 
         //move agent forward when W is pressed
         _rb.AddForce(transform.forward*moveForward*_moveSpeed,ForceMode.Force);
-        //Rotate agent;
-        transform.Rotate(new Vector3(0,turnSpeed*_turnSpeed*Time.deltaTime,0));
-        //_rb.AddTorque(new Vector3(0,turnSpeed*_turnSpeed,0),ForceMode.Force);
+        
+        //First the cumulativeReward needs to be higher than 10 I hope rotating agents will be less at this point
+        if (GetCumulativeReward() > 10)
+        {
+            //Rotate agent;
+            // transform.Rotate(new Vector3(0,turnSpeed*_turnSpeed*Time.deltaTime,0));
+            _rb.AddTorque(new Vector3(0, turnSpeed * _turnSpeed, 0), ForceMode.Force);
+        }
+        
         //Make agent jump when space is pressed
         _rb.AddForce(Vector3.up*jump*_jumpHeight, ForceMode.Impulse);
         //make sure the agent gets punished for inactivity in order to move more
