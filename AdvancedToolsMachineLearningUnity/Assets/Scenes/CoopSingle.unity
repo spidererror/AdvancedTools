@@ -194,6 +194,14 @@ PrefabInstance:
       propertyPath: m_Model
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5872828365850330948, guid: bc75082180ad399408a9e37adabcadeb, type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874624103918495657, guid: bc75082180ad399408a9e37adabcadeb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5876824394450723668, guid: bc75082180ad399408a9e37adabcadeb, type: 3}
       propertyPath: m_LocalPosition.y
       value: -8.51
